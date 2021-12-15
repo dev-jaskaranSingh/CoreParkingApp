@@ -5,7 +5,7 @@ import SplashScreen from 'react-native-splash-screen';
 import {
   COLORS
 } from './src/constants';
-import { AppTabNavigator, navigationTheme } from './src/routes';
+import { AppDrawerNavigator, navigationTheme } from './src/routes';
 
 export default function App() {
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.primary} />
       <NavigationContainer theme={navigationTheme}>
-        <AppTabNavigator />
+        <AppDrawerNavigator />
       </NavigationContainer>
     </View>
   );
