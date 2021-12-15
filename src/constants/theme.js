@@ -1,4 +1,4 @@
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 
@@ -32,7 +32,7 @@ export function responsiveWidth(w) {
 
 export const COLORS = {
   // base colors
-  primary: '#267ab5', // green
+  primary: '#1C66D7', // green
   secondary: '#ed3237', // dark green
   darkTransparent: '#000000d6',
   primaryFont: '#ffff',
