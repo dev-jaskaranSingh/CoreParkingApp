@@ -34,7 +34,7 @@ function drawerButton(color, size) {
     
     return (
         <Tab.Navigator
-            initialRouteName="  "
+            initialRouteName="Home"
             allowFontScaling={false}
             animationEnabled
             screenOptions={{
@@ -54,7 +54,7 @@ function drawerButton(color, size) {
                 },
                 headerTintColor: COLORS.primary,
                 headerLeft: () => {
-                    return drawerButton(COLORS.primary, 30);
+                    return drawerButton(COLORS.primary, 20);
                 },
             }}
             >

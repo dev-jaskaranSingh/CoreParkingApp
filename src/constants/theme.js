@@ -57,7 +57,7 @@ export const COLORS = {
   black: '#1E1F20',
   white: '#FFFFFF',
 
-  lightGray: '#eaeaea',
+  lightGray: '#f4f4f4',
   gray: '#C1C3C5',
 
   darkgray: '#0007',
