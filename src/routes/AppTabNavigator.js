@@ -25,7 +25,7 @@ function drawerButton(color, size) {
         paddingHorizontal: 20,
       }}
 >
-      <Icon name="bars" type="font-awesome" size={size} color={color} />
+      <Icon name="align-left" type="font-awesome-5" size={size} color={color} />
     </TouchableOpacity>
   );
 }
