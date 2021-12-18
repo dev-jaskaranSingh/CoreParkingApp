@@ -1,5 +1,4 @@
 import { AppRegistry, LogBox, Text, TextInput } from 'react-native';
-import 'react-native-gesture-handler';
 import App from './App';
 import { name as appName } from './app.json';
 AppRegistry.registerComponent(appName, () => App);
@@ -7,13 +6,13 @@ AppRegistry.registerComponent(appName, () => App);
 LogBox.ignoreLogs(['Reanimated 2']);
 
 if (Text.defaultProps == null) {
-    Text.defaultProps = {};
-    Text.defaultProps.allowFontScaling = false;
+  Text.defaultProps = {};
+  Text.defaultProps.allowFontScaling = false;
 }
 
 if (TextInput.defaultProps == null) {
-    TextInput.defaultProps = {};
-    TextInput.defaultProps.allowFontScaling = false;
+  TextInput.defaultProps = {};
+  TextInput.defaultProps.allowFontScaling = false;
 }
 
 Text.defaultProps.allowFontScaling = false;

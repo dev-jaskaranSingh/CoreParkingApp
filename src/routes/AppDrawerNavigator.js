@@ -4,20 +4,21 @@ import { Icon } from 'react-native-elements';
 import {
   COLORS
 } from '../constants';
-//Screens
+import { Account } from '../pages';
 import {
-  Dashboard
-} from '../pages';
-
+  AppTabNavigator
+} from '../routes';
 
 const Drawer = createDrawerNavigator();
+
 export default function AppDrawerNavigator() {
   return (
           <Drawer.Navigator
-            initialRouteName="Home"
+            initialRouteName="Dashboard"
             allowFontScaling={false}
+            animationEnabled
             screenOptions={({ navigation, route }) => ({
-              headerShown: true,
+              headerShown: false,
               headerTitleAlign: 'center',
               headerStyle: {
                 backgroundColor: COLORS.primary,
@@ -28,15 +29,26 @@ export default function AppDrawerNavigator() {
               headerTintColor: COLORS.white,
             })}>
             <Drawer.Screen
-              name="Home"
-              component={Dashboard}
+              name="Dashboard"
+              component={AppTabNavigator}
               options={{
                 title: 'Home',
                 drawerIcon: ({ focused, size, color }) => (
-                  <Icon name="bar-graph" type="entypo" size={size} color={color} />
+                  <Icon name="home" type="entypo" size={size} color={color} />
                 ),
               }}
             />
+            <Drawer.Screen
+              name="Account"
+              component={Account}
+              options={{
+                title: 'Account',
+                drawerIcon: ({focused, size, color}) => (
+                  <Icon name="user" type="entypo" size={size} color={color} />
+                ),
+              }}
+            />
+
           </Drawer.Navigator>
   );
 }
