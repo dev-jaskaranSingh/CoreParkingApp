@@ -1,12 +1,59 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { COLORS, FONTS } from '../../constants/theme';
 
 const Tab = createMaterialTopTabNavigator();
 
-function Card() {
+const TABS = [
+  {
+    id:1,
+    name: 'Parking 1',
+    component: TopTabComponent,
+    user:{
+      id:11,
+      name: 'User 1',
+      collection :140,
+      inHouseVehicles:15
+    }
+  },
+  {
+    id:2,
+    name: 'Parking 2',
+    component: TopTabComponent,
+    user:{
+      id:12,
+      name: 'User 2',
+      collection :134,
+      inHouseVehicles:25
+    }
+  },
+  {
+    id:3,
+    name: 'Parking 3',
+    component: TopTabComponent,
+    user:{
+      id:13,
+      name: 'User 3',
+      collection :174,
+      inHouseVehicles:95
+    },
+  },
+  {
+    id:4,
+    name: 'Parking 4',
+    component: TopTabComponent,
+    user:{
+      id:14,
+      name: 'User 4',
+      collection :114,
+      inHouseVehicles:55
+    },
+  },
+];
+
+function Card({title='Title',value=0}) {
   return (
     <View
       style={{
@@ -26,7 +73,7 @@ function Card() {
           borderRadius: 10,
           color: COLORS.white,
         }}>
-        Today's Collection
+        {title}
       </Text>
       <Text
         style={{
@@ -35,15 +82,16 @@ function Card() {
           color: COLORS.primary,
           fontWeight: 'bold',
         }}>
-        10$
+        {value}$
       </Text>
     </View>
   );
 }
 
-function TopTabComponent() {
+function TopTabComponent({route}) {
+  let user = route.params;
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View
         style={{
           paddingHorizontal: 10,
@@ -57,12 +105,12 @@ function TopTabComponent() {
             justifyContent: 'space-between',
           }}>
           <Text style={FONTS.h4}>Active User</Text>
-          <Text style={FONTS.h4}>User Name</Text>
+          <Text style={FONTS.h4}>{user.name}</Text>
         </View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <Card />
-        <Card />
+        <Card title="Today's Collection" value={user.collection}/>
+        <Card title="In House Vehicles" value={user.inHouseVehicles}/>
       </View>
       <View
         style={{
@@ -82,7 +130,7 @@ function TopTabComponent() {
           }]}>Generate Ticket</Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -115,34 +163,18 @@ const Index = () => {
                 borderRadius: 100,
               },
             }}>
-            <Tab.Screen
-              name="Parking"
-              component={TopTabComponent}
-              options={{
-                title: 'Parking',
-              }}
-            />
-            <Tab.Screen
-              name="Test2"
-              component={TopTabComponent}
-              options={{
-                title: 'Parking 2',
-              }}
-            />
-            <Tab.Screen
-              name="Test3"
-              component={TopTabComponent}
-              options={{
-                title: 'Parking 3',
-              }}
-            />
-            <Tab.Screen
-              name="Test4"
-              component={TopTabComponent}
-              options={{
-                title: 'Parking 4',
-              }}
-            />
+              {TABS.map(tab => {
+                return (
+                  <Tab.Screen
+                    key={tab.id}
+                    name={tab.name}
+                    component={TopTabComponent}
+                    initialParams={tab.user}
+                    options={{
+                      title: tab.name,
+                    }}
+                  />);
+              })}
           </Tab.Navigator>
         </NavigationContainer>
       </View>
@@ -153,7 +185,6 @@ const Index = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
     backgroundColor: 'white',
   },
 });
