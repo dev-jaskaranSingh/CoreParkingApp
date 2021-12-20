@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -7,10 +7,10 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {Icon} from 'react-native-elements';
-import {COLORS, FONTS, icons, responsiveWidth} from '../constants';
+import { Icon } from 'react-native-elements';
+import { COLORS, FONTS, icons, responsiveWidth } from '../constants';
 
 const InputComponent = ({
   isPassword = false,
@@ -40,6 +40,7 @@ const InputComponent = ({
     <View
       style={{
         marginVertical: 10,
+        justifyContent: 'center',
       }}>
       <Text style={styles.labelText}>
         {label}
@@ -104,10 +105,12 @@ const styles = StyleSheet.create({
   textInputStyle: {
     borderBottomWidth: 2,
     borderBottomColor: COLORS.primary,
-    borderRadius: 2,
+    borderRadius: 10,
     color: COLORS.darkTransparent,
-    paddingLeft: 30,
+    paddingLeft: 35,
     width: '100%',
+    backgroundColor: COLORS.lightGray,
+    justifyContent: 'center',
   },
   passwordImage: {
     height: responsiveWidth(7),
@@ -123,12 +126,12 @@ const styles = StyleSheet.create({
     top: responsiveWidth(7.9),
     right: 0,
   },
-  leftIconContainer: {position: 'absolute', top: responsiveWidth(7.9), left: 0},
+  leftIconContainer: {position: 'absolute', top: responsiveWidth(7.9), left: 10,top:38},
   labelText: {
     ...FONTS.h4,
     color: COLORS.primary,
-    fontWeight: 'bold',
-    marginBottom: 3,
+    fontWeight: '900',
+    marginBottom: 8,
   },
   required: {
     ...FONTS.h4,
