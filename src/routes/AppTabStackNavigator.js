@@ -1,8 +1,13 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import { COLORS, FONTS } from '../constants';
+import {COLORS, FONTS} from '../constants';
 //Screens
-import { Employees } from '../pages';
+import {
+  Employees,
+  EmployeeCreate,
+  EmployeeEdit,
+  EmployeeDetails,
+} from '../pages';
 //Create object for navigation
 const Stack = createStackNavigator();
 
@@ -26,14 +31,26 @@ function AppTabStackNavigator() {
         };
       }}>
       {/* List of screen components */}
-
       <Stack.Screen
         name="Employees"
         component={Employees}
         options={{headerShown: false, title: 'Employees'}}
       />
-
-
+      <Stack.Screen
+        name="Create"
+        component={EmployeeCreate}
+        options={{headerShown: false, title: 'Employee Create'}}
+      />
+      <Stack.Screen
+        name="Edit"
+        component={EmployeeEdit}
+        options={{headerShown: false, title: 'Employee Edit'}}
+      />
+      <Stack.Screen
+        name="Details"
+        component={EmployeeDetails}
+        options={{headerShown: false, title: 'Employee Details'}}
+      />
     </Stack.Navigator>
   );
 }

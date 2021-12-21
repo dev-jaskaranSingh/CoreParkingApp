@@ -43,69 +43,74 @@ const DUMMY_EMPLOYEES = [
   },
 ];
 
-function renderListHeader(){
-  return <View style={{margin: 15}}>
-  <Button
-    buttonStyle={{
-      backgroundColor: COLORS.darkGreen,
-      borderWidth: 2,
-      borderColor: 'white',
-      paddingHorizontal: 15,
-      borderRadius: 18,
-    }}
-    title="Create New Employee"
-  />
-</View>;
-}
 
-function renderEmployeeComponent({item}) {
-  return (
-    <TouchableHighlight
-      activeOpacity={0.9}
-      underlayColor={COLORS.primary}
-      onPress={() => console.log('Pressed!')}>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Title>{item.name}</ListItem.Title>
-          <View>
-            <Text>{item.parking}</Text>
-          </View>
-        </ListItem.Content>
+const Index = ({navigation}) => {
 
-        <ListItem.Content
-          style={{
-            marginLeft: 60,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}>
-          <Button
-            buttonStyle={{
-              backgroundColor: COLORS.primary,
-              borderWidth: 2,
-              borderColor: 'white',
-              paddingHorizontal: 15,
-              borderRadius: 18,
-            }}
-            title="Edit"
-          />
+  function renderListHeader(){
+    return <View style={{margin: 15}}>
+    <Button
+      buttonStyle={{
+        backgroundColor: COLORS.darkGreen,
+        borderWidth: 2,
+        borderColor: 'white',
+        paddingHorizontal: 15,
+        borderRadius: 18,
+      }}
+      title="Create New Employee"
+      onPress={() => navigation.navigate('Create')}
+    />
+  </View>;
+  }
+  
+  function renderEmployeeComponent({item}) {
+    return (
+      <TouchableHighlight
+        activeOpacity={0.9}
+        underlayColor={COLORS.primary}
+        onPress={() => console.log('Pressed!')}>
+        <ListItem bottomDivider>
+          <ListItem.Content>
+            <ListItem.Title>{item.name}</ListItem.Title>
+            <View>
+              <Text>{item.parking}</Text>
+            </View>
+          </ListItem.Content>
+  
+          <ListItem.Content
+            style={{
+              marginLeft: 60,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Button
+              buttonStyle={{
+                backgroundColor: COLORS.primary,
+                borderWidth: 2,
+                borderColor: 'white',
+                paddingHorizontal: 15,
+                borderRadius: 18,
+              }}
+              title="Edit"
+              onPress={() => navigation.navigate('Edit', {id: item.id})}
+            />
+  
+            <Button
+              buttonStyle={{
+                backgroundColor: COLORS.orange,
+                borderWidth: 2,
+                borderColor: 'white',
+                paddingHorizontal: 15,
+                borderRadius: 18,
+              }}
+              title="Details"
+              onPress={() => navigation.navigate('Details', {id: item.id})}
+            />
+          </ListItem.Content>
+        </ListItem>
+      </TouchableHighlight>
+    );
+  }
 
-          <Button
-            buttonStyle={{
-              backgroundColor: COLORS.orange,
-              borderWidth: 2,
-              borderColor: 'white',
-              paddingHorizontal: 15,
-              borderRadius: 18,
-            }}
-            title="Details"
-          />
-        </ListItem.Content>
-      </ListItem>
-    </TouchableHighlight>
-  );
-}
-
-const Index = () => {
   return (
     <Layout>
       <FlatList
