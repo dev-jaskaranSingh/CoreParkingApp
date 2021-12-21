@@ -13,8 +13,9 @@ function ListItem({label,value}){
       borderRadius: 10,
       padding: 5,
       marginBottom: 15,
+      justifyContent: 'center',
     }}>
-    <Text style={[FONTS.body3, {marginBottom: 10, color: COLORS.darkgray}]}>
+    <Text style={[FONTS.body3, {marginBottom: 8, color: COLORS.darkgray}]}>
       {value}
     </Text>
   </View>

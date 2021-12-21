@@ -3,8 +3,8 @@ import {
   DrawerItemList
 } from '@react-navigation/drawer';
 import React from 'react';
-import { Button, Image, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Image, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 import {
   COLORS
 } from '../constants';
@@ -63,7 +63,10 @@ function CustomDrawerContent(props) {
           padding: 20,
           }}>
 
-      <Button title="Logout" color={COLORS.red} />
+      <Button title="Logout" buttonStyle={{
+        backgroundColor: COLORS.red,
+        borderRadius:15,
+      }} />
       
       <View style={{
           flexDirection: 'row',
