@@ -1,14 +1,15 @@
 import React from 'react';
 import {
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableHighlight,
-    View
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View
 } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
 import { Layout } from '..';
 import { COLORS } from '../../constants';
+
 const DUMMY_EMPLOYEES = [
   {
     id: 1,
@@ -41,6 +42,21 @@ const DUMMY_EMPLOYEES = [
     parking: 'Parking 6',
   },
 ];
+
+function renderListHeader(){
+  return <View style={{margin: 15}}>
+  <Button
+    buttonStyle={{
+      backgroundColor: COLORS.darkGreen,
+      borderWidth: 2,
+      borderColor: 'white',
+      paddingHorizontal: 15,
+      borderRadius: 18,
+    }}
+    title="Create New Employee"
+  />
+</View>;
+}
 
 function renderEmployeeComponent({item}) {
   return (
@@ -96,20 +112,7 @@ const Index = () => {
         data={DUMMY_EMPLOYEES}
         renderItem={renderEmployeeComponent}
         keyExtractor={item => item.id.toString()}
-        ListHeaderComponent={() => (
-          <View style={{margin: 15}}>
-            <Button
-              buttonStyle={{
-                backgroundColor: COLORS.darkGreen,
-                borderWidth: 2,
-                borderColor: 'white',
-                paddingHorizontal: 15,
-                borderRadius: 18,
-              }}
-              title="Create New Employee"
-            />
-          </View>
-        )}
+        ListHeaderComponent={renderListHeader}
       />
     </Layout>
   );
