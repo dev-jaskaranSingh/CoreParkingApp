@@ -9,8 +9,10 @@ import {
   Text,
   View
 } from 'react-native';
+import { Layout } from '..';
 import { Button, InputComponent } from '../../components';
 import { COLORS, FONTS } from '../../constants/theme';
+
 const Tab = createMaterialTopTabNavigator();
 
 const TABS = [
@@ -98,82 +100,87 @@ function Card({title = 'Title', value = 0}) {
 function TopTabComponent({route}) {
   let user = route.params;
   return (
-    <ScrollView style={styles.container}>
-      <View
-        style={{
-          paddingHorizontal: 10,
-          backgroundColor: COLORS.lightGray,
-          marginVertical: 15,
-        }}>
+    <Layout>
+      <ScrollView style={styles.container}>
         <View
           style={{
-            flexDirection: 'row',
-            paddingVertical: 10,
-            justifyContent: 'space-between',
+            paddingHorizontal: 10,
+            backgroundColor: COLORS.lightGray,
+            marginVertical: 15,
           }}>
-          <Text style={FONTS.h4}>Active User</Text>
-          <Text style={[FONTS.h4,{fontWeight: 'bold',color: COLORS.primary}]}>{user.name}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingVertical: 10,
+              justifyContent: 'space-between',
+            }}>
+            <Text style={FONTS.h4}>Active User</Text>
+            <Text
+              style={[FONTS.h4, {fontWeight: 'bold', color: COLORS.primary}]}>
+              {user.name}
+            </Text>
+          </View>
         </View>
-      </View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <Card title="Today's Collection" value={user.collection} />
-        <Card title="In House Vehicles" value={user.inHouseVehicles} />
-      </View>
-      <View
-        style={{
-          paddingHorizontal: 10,
-          backgroundColor: COLORS.lightGray,
-          marginVertical: 15,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingVertical: 10,
-            justifyContent: 'flex-start',
-          }}>
-          <Text
-            style={[
-              FONTS.h4,
-              {
-                color: COLORS.primary,
-                fontWeight: 'bold',
-              },
-            ]}>
-            Generate Ticket
-          </Text>
+        <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          <Card title="Today's Collection" value={user.collection} />
+          <Card title="In House Vehicles" value={user.inHouseVehicles} />
         </View>
-      </View>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View
           style={{
-            paddingHorizontal: 15,
-            marginTop: 5,
+            paddingHorizontal: 10,
+            backgroundColor: COLORS.lightGray,
+            marginVertical: 15,
           }}>
-          <InputComponent
-            required={true}
-            label="Vehicle Number"
-            leftIcon="bus"
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingVertical: 10,
+              justifyContent: 'flex-start',
+            }}>
+            <Text
+              style={[
+                FONTS.h4,
+                {
+                  color: COLORS.primary,
+                  fontWeight: 'bold',
+                },
+              ]}>
+              Generate Ticket
+            </Text>
+          </View>
+        </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <View
+            style={{
+              paddingHorizontal: 15,
+              marginTop: 5,
+            }}>
+            <InputComponent
+              required={true}
+              label="Vehicle Number"
+              leftIcon="bus"
+            />
+            <InputComponent
+              required={true}
+              label="Mobile Number"
+              leftIcon="phone"
+            />
+          </View>
+          <Button
+            title="Generate"
+            backgroundColor={COLORS.darkGreen}
+            width="90%"
           />
-          <InputComponent
-            required={true}
-            label="Mobile Number"
-            leftIcon="phone"
-          />
-        </View>
-        <Button
-          title="Generate"
-          backgroundColor={COLORS.darkGreen}
-          width="90%"
-        />
-      </KeyboardAvoidingView>
-    </ScrollView>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </Layout>
   );
 }
 
 const Index = () => {
   return (
-    <View style={styles.container}>
+    <Layout>
       <View
         style={{
           paddingHorizontal: 10,
@@ -222,7 +229,7 @@ const Index = () => {
           </Tab.Navigator>
         </NavigationContainer>
       </View>
-    </View>
+    </Layout>
   );
 };
 

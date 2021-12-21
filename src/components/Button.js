@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { COLORS, responsiveHeight, responsiveWidth, SIZES } from '../constants';
 
 const Button = ({
+    style,
                     height = responsiveHeight(6),
                     width = '100%',
                     title = 'Button',
@@ -19,6 +20,7 @@ const Button = ({
                     height,
                     backgroundColor,
                 },
+                style,
             ]}
             onPress={onPress}>
             <Text

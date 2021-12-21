@@ -31,7 +31,7 @@ export default function AppTabNavigator() {
 
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Employees"
       allowFontScaling={false}
       animationEnabled
       screenOptions={{
