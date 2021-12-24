@@ -96,7 +96,7 @@ export default function AppTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Employees"
+        name="EmployeesStackNavigator"
         component={AppTabStackNavigator}
         options={{
           tabBarIcon: function ({size, color}) {
