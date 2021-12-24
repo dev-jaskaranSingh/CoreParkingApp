@@ -1,12 +1,9 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import {COLORS, FONTS} from '../constants';
+import { COLORS, FONTS } from '../constants';
 //Screens
 import {
-  Employees,
-  EmployeeCreate,
-  EmployeeEdit,
-  EmployeeDetails,
+  EmployeeCreate, EmployeeDetails, EmployeeEdit, Employees
 } from '../pages';
 //Create object for navigation
 const Stack = createStackNavigator();

@@ -99,6 +99,7 @@ export default function AppTabNavigator() {
         name="EmployeesStackNavigator"
         component={AppTabStackNavigator}
         options={{
+          title: 'Employees',
           tabBarIcon: function ({size, color}) {
             return <Icon name="users" size={size * 1.2} color={color} />;
           },
