@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Button } from 'react-native-elements/dist/buttons/Button';
@@ -110,7 +110,7 @@ const Edit = () => {
             </View>
 
             <Button
-              title="Take Photo"
+              title="Select Document"
               icon={
                 <Icon
                   name="upload"
@@ -132,7 +132,7 @@ const Edit = () => {
             />
 
             <Button
-              title="Save"
+              title="Update"
               buttonStyle={{
                 backgroundColor: COLORS.darkGreen,
                 marginTop: 10,

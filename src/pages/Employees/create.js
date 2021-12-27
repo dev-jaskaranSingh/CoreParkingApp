@@ -1,6 +1,13 @@
 import React from 'react';
 import {
-  Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Button } from 'react-native-elements/dist/buttons/Button';
@@ -9,9 +16,7 @@ import { InputComponent } from '../../components';
 import { COLORS, FONTS } from '../../constants';
 import Layout from '../Layout';
 
-
 const Create = () => {
-
   const openCamera = () => {
     ImagePicker.openCamera({
       width: 300,
@@ -31,7 +36,6 @@ const Create = () => {
         console.log(err);
       });
   };
-
 
   const [image, setImage] = React.useState(null);
 
@@ -106,10 +110,18 @@ const Create = () => {
             </View>
 
             <Button
-              title="Take Photo"
-              icon={<Icon name="upload" type="font-awesome-5" size={20} color="white" style={{
-                marginRight: 10,
-              }}/>}
+              title="Select Document"
+              icon={
+                <Icon
+                  name="upload"
+                  type="font-awesome-5"
+                  size={20}
+                  color="white"
+                  style={{
+                    marginRight: 10,
+                  }}
+                />
+              }
               buttonStyle={{
                 backgroundColor: COLORS.darkgray,
                 marginTop: 20,

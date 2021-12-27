@@ -61,7 +61,7 @@ export const COLORS = {
   gray: '#e9e9e9',
 
   darkgray: '#0007',
-
+  darkGray: '#0007',
   transparent: 'transparent',
 
   seagreen: '#20b2aa',

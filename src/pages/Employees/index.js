@@ -43,25 +43,25 @@ const DUMMY_EMPLOYEES = [
   },
 ];
 
-
 const Index = ({navigation}) => {
-
-  function renderListHeader(){
-    return <View style={{margin: 15}}>
-    <Button
-      buttonStyle={{
-        backgroundColor: COLORS.darkGreen,
-        borderWidth: 2,
-        borderColor: 'white',
-        paddingHorizontal: 15,
-        borderRadius: 18,
-      }}
-      title="Create New Employee"
-      onPress={() => navigation.navigate('Create')}
-    />
-  </View>;
+  function renderListHeader() {
+    return (
+      <View style={{margin: 15}}>
+        <Button
+          buttonStyle={{
+            backgroundColor: COLORS.darkGreen,
+            borderWidth: 2,
+            borderColor: 'white',
+            paddingHorizontal: 15,
+            borderRadius: 18,
+          }}
+          title="Create New Employee"
+          onPress={() => navigation.navigate('Create')}
+        />
+      </View>
+    );
   }
-  
+
   function renderEmployeeComponent({item}) {
     return (
       <TouchableHighlight
@@ -75,7 +75,7 @@ const Index = ({navigation}) => {
               <Text>{item.parking}</Text>
             </View>
           </ListItem.Content>
-  
+
           <ListItem.Content
             style={{
               marginLeft: 60,
@@ -93,7 +93,7 @@ const Index = ({navigation}) => {
               title="Edit"
               onPress={() => navigation.navigate('Edit', {id: item.id})}
             />
-  
+
             <Button
               buttonStyle={{
                 backgroundColor: COLORS.orange,

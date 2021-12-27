@@ -3,7 +3,7 @@ import {
   DrawerContentScrollView,
   DrawerItemList
 } from '@react-navigation/drawer';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Image,
   Text,
@@ -12,10 +12,12 @@ import {
   View
 } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
+import AuthContext from '../auth/Context';
 import { COLORS } from '../constants';
 import { AppTabNavigator } from '../routes';
-
 function CustomDrawerContent(props) {
+  //Deceleration Of Context
+  const authContext = useContext(AuthContext);
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
@@ -51,8 +53,8 @@ function CustomDrawerContent(props) {
               alignItems: 'center',
             }}>
             <View>
-              <Text>John Doe</Text>
-              <Text>example@email.com</Text>
+              <Text>Jaskaran Singh</Text>
+              <Text>jaskaran@gmail.com</Text>
             </View>
             <Image
               source={{
@@ -79,6 +81,7 @@ function CustomDrawerContent(props) {
             backgroundColor: COLORS.red,
             borderRadius: 15,
           }}
+          onPress={() => authContext.setUser(null)}
         />
 
         <View
@@ -98,7 +101,9 @@ function CustomDrawerContent(props) {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          <Text style={{color: COLORS.darkgray,fontWeight: 'bold'}}>Core Innovative Solutions</Text>
+          <Text style={{color: COLORS.darkgray, fontWeight: 'bold'}}>
+            Core Innovative Solutions
+          </Text>
         </View>
       </View>
     </View>

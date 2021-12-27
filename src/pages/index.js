@@ -5,6 +5,7 @@ import EmployeeCreate from './Employees/create';
 import EmployeeDetails from './Employees/details';
 import EmployeeEdit from './Employees/edit';
 import Layout from './Layout';
+import Login from './Login';
 import Report from './Reports';
 
 export {
@@ -15,6 +16,7 @@ export {
     EmployeeDetails,
     EmployeeEdit,
     Layout,
+    Login,
     Report,
 };
 
