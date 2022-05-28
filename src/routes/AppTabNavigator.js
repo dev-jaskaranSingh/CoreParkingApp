@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { COLORS } from '../constants';
 //Screens
-import { Account, Dashboard, Report } from '../pages';
+import { Account, Dashboard, Outs } from '../pages';
 import AppTabStackNavigator from './AppTabStackNavigator';
 //Create object for navigation
 import navigation from './rootNavigator';
@@ -78,33 +78,24 @@ export default function AppTabNavigator() {
         },
       }}>
       <Tab.Screen
-        name="Home"
+        name="In"
         component={Dashboard}
         options={{
           tabBarIcon: function ({size, color}) {
-            return <Icon name="home" size={size * 1.2} color={color} />;
+            return <Icon name="arrow-down" size={size * 1.2} color={color} />;
           },
         }}
       />
       <Tab.Screen
-        name="Report"
-        component={Report}
+        name="Outs"
+        component={Outs}
         options={{
           tabBarIcon: function ({size, color}) {
-            return <Icon name="book" size={size * 1.2} color={color} />;
+            return <Icon name="arrow-up" size={size * 1.2} color={color} />;
           },
         }}
       />
-      <Tab.Screen
-        name="EmployeesStackNavigator"
-        component={AppTabStackNavigator}
-        options={{
-          title: 'Employees',
-          tabBarIcon: function ({size, color}) {
-            return <Icon name="users" size={size * 1.2} color={color} />;
-          },
-        }}
-      />
+
       <Tab.Screen
         name="Account"
         component={Account}

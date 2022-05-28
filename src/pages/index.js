@@ -7,6 +7,7 @@ import EmployeeEdit from './Employees/edit';
 import Layout from './Layout';
 import Login from './Login';
 import Report from './Reports';
+import Outs from './Outs';
 
 export {
     Account,
@@ -18,5 +19,6 @@ export {
     Layout,
     Login,
     Report,
+    Outs
 };
 

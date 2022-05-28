@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -7,10 +7,10 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { COLORS, FONTS, icons, responsiveWidth } from '../constants';
+import {Icon} from 'react-native-elements';
+import {COLORS, FONTS, icons, responsiveWidth} from '../constants';
 
 const InputComponent = ({
   isPassword = false,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     borderBottomWidth: 2,
     borderBottomColor: COLORS.primary,
-    borderRadius: 10,
+    borderRadius: 2,
     color: COLORS.darkTransparent,
     paddingLeft: 35,
     width: '100%',
@@ -126,9 +126,13 @@ const styles = StyleSheet.create({
     top: responsiveWidth(7.9),
     right: 0,
   },
-  leftIconContainer: {position: 'absolute', top: responsiveWidth(7.9), left: 10,top:38},
+  leftIconContainer: {
+    position: 'absolute',
+    left: 10,
+    top: 38,
+  },
   labelText: {
-    ...FONTS.h4,
+    ...FONTS.h5,
     color: COLORS.primary,
     fontWeight: '900',
     marginBottom: 8,
