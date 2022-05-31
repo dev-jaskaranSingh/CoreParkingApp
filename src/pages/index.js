@@ -10,15 +10,14 @@ import Report from './Reports';
 import Outs from './Outs';
 
 export {
-    Account,
-    Dashboard,
-    Employees,
-    EmployeeCreate,
-    EmployeeDetails,
-    EmployeeEdit,
-    Layout,
-    Login,
-    Report,
-    Outs
+  Account,
+  Dashboard,
+  Employees,
+  EmployeeCreate,
+  EmployeeDetails,
+  EmployeeEdit,
+  Layout,
+  Login,
+  Report,
+  Outs,
 };
-

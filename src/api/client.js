@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-//  const BASE_URL = 'https://cleanfold.ripungupta.com/public/api';
-const BASE_URL = 'https://cleanfold.in/backend/clean_fold/public/api';
+const BASE_URL = 'https://parking-api.ripungupta.com/public/api';
 
 // define the api
 const apiClient = axios.create({
@@ -10,9 +9,8 @@ const apiClient = axios.create({
   headers: {
     Authorization:
       'Bearer $2y$10$5OmYFG9clk67v8g2VO.YXOwSqVyX9MzPdtXhyQ4lHVjdpm62wuLMK',
-    Accept: 'application/json'
+    Accept: 'application/json',
   },
 });
 
-export { apiClient, BASE_URL, axios };
-
+export {apiClient, BASE_URL, axios};

@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { Button } from 'react-native-elements';
+import React, {useContext} from 'react';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {Button} from 'react-native-elements';
 import AuthContext from '../../auth/Context';
-import { COLORS, FONTS } from '../../constants';
+import {COLORS, FONTS} from '../../constants';
 import Layout from '../Layout';
 function ListItem({label, value}) {
   return (
@@ -42,7 +42,7 @@ const Index = () => {
           }}>
           <Image
             source={{
-              uri: 'https://avatars.githubusercontent.com/u/42887065?v=4',
+              uri: 'https://i.pinimg.com/736x/64/81/22/6481225432795d8cdf48f0f85800cf66.jpg',
             }}
             style={{
               width: 100,
@@ -50,12 +50,12 @@ const Index = () => {
               borderRadius: 100,
             }}
           />
-          <Text style={[FONTS.body2, {marginTop: 10}]}>AdminProfilePic</Text>
+          <Text style={[FONTS.body2, {marginTop: 10}]}>{authContext?.user?.name}</Text>
         </View>
 
-        <ListItem label="Name" value="Jaskaran Singh" />
-        <ListItem label="Mobile" value="9530654704" />
-        <ListItem label="Email" value="jaskaransingh4704@gmail.com" />
+        <ListItem label="Name" value={authContext?.user?.name} />
+        <ListItem label="Mobile" value={authContext?.user?.mobile} />
+        <ListItem label="Email" value={authContext?.user?.email} />
         <View style={{marginTop: 25}}>
           <Button
             title="Logout"

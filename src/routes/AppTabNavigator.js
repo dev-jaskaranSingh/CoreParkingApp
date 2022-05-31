@@ -1,14 +1,13 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { COLORS } from '../constants';
+import {COLORS} from '../constants';
 //Screens
-import { Account, Dashboard, Outs } from '../pages';
+import {Account, Dashboard, Outs} from '../pages';
 import AppTabStackNavigator from './AppTabStackNavigator';
 //Create object for navigation
 import navigation from './rootNavigator';
-
 
 const Tab = createBottomTabNavigator();
 

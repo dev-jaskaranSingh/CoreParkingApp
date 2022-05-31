@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -6,16 +6,54 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  ToastAndroid,
+  View,
 } from 'react-native';
+
 import AuthContext from '../../auth/Context';
-import { Button, InputComponent } from '../../components';
-import { COLORS, FONTS, images, responsiveHeight, SIZES } from '../../constants';
+import {Button, InputComponent} from '../../components';
+import {COLORS, FONTS, images, responsiveHeight, SIZES} from '../../constants';
 import Layout from '../Layout';
+import api from '../../api/auth';
 
 export default function index({navigation}) {
   //Deceleration Of Context
   const authContext = useContext(AuthContext);
+  const [email, setEmail] = useState('9876543123');
+  const [password, setPassword] = useState('123456');
+  const [buttonLoading, setButtonLoading] = useState(false);
+
+  function loginUser() {
+    api
+      .signIn(email, password)
+      .then(res => {
+        console.log(res.status);
+        if (res.status === 200) {
+          ToastAndroid.showWithGravity(
+            res.data.data.message,
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+          );
+          authContext.setUser(res.data.data.user);
+          setButtonLoading(false);
+        } else {
+          setButtonLoading(false);
+          ToastAndroid.showWithGravity(
+            res.data.error.message,
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+          );
+        }
+      })
+      .catch(err => {
+        ToastAndroid.showWithGravity(
+          err.response.data.error.message,
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+        );
+        setButtonLoading(false);
+      });
+  }
 
   //Component Renders
   function renderButtons() {
@@ -28,9 +66,19 @@ export default function index({navigation}) {
           title="Login"
           titleColor="white"
           backgroundColor={COLORS.primary}
+          loading={buttonLoading}
           onPress={() => {
-            authContext.setUser({name: 'Jaskaran Singh', auth: true});
-            console.log('Sign In');
+            setButtonLoading(true);
+            if (email === '' || password === '') {
+              ToastAndroid.showWithGravity(
+                'Please fill all the fields',
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER,
+              );
+              setButtonLoading(false);
+            } else {
+              loginUser();
+            }
           }}
         />
       </View>
@@ -72,21 +120,29 @@ export default function index({navigation}) {
       <View behavior="position" style={{paddingBottom: SIZES.padding * 2}}>
         {/* email */}
         <InputComponent
-          placeholder=""
-          label="Mobile Number"
+          placeholder="Mobile/Email"
+          label="Mobile/Email"
           required
-          value={null}
-          onChangeText={value => console.log(value)}
+          leftIcon="phone"
+          value={email}
+          onChangeText={value => {
+            console.log(value);
+            setEmail(value);
+          }}
         />
 
         {/* Password */}
         <InputComponent
-          placeholder="password"
+          placeholder="Password"
           label="Password"
+          leftIcon="lock"
           isPassword={true}
-          value={null}
+          value={password}
           required
-          onChangeText={value => console.log(value)}
+          onChangeText={value => {
+            console.log(value);
+            setPassword(value);
+          }}
         />
       </View>
     );

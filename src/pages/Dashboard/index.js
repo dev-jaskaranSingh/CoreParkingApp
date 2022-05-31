@@ -1,6 +1,6 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -9,12 +9,15 @@ import {
   StyleSheet,
   Text,
   View,
+  ActivityIndicator,
+  ToastAndroid,
 } from 'react-native';
 import {Button, Icon} from 'react-native-elements';
-import ImagePicker from 'react-native-image-crop-picker';
 import {Layout} from '..';
 import {InputComponent} from '../../components';
 import {COLORS, FONTS} from '../../constants/theme';
+import api from '../../api/services';
+import AuthContext from '../../auth/Context';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -79,9 +82,51 @@ function Card({title = 'Title', value = 0}) {
 }
 
 function TopTabComponent({route}) {
-  const [image, setImage] = React.useState(null);
+  const [vehicleNumber, setVehicleNo] = React.useState(null);
+  const [buttonLoading, setButtonLoading] = React.useState(false);
 
-  let user = route.params;
+  let vehicle = route.params;
+  let TickerPostData = {
+    vehicleNo: vehicleNumber,
+    employeeId: vehicle.employeeId,
+    vehicleType: vehicle.id,
+  };
+
+  function submitTicketForm() {
+    if (vehicleNumber !== null) {
+      api
+        .entryVehicle(TickerPostData)
+        .then(res => {
+          console.log(res.data.data.message);
+          setButtonLoading(false);
+          ToastAndroid.showWithGravity(
+            res.data.data.message,
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+          );
+          setButtonLoading(false);
+          setVehicleNo(null);
+        })
+        .catch(err => {
+          ToastAndroid.showWithGravity(
+            err.response.data.error.message,
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+          );
+          setVehicleNo(null);
+          setButtonLoading(false);
+        });
+    } else {
+      ToastAndroid.showWithGravity(
+        'Vehicle Number is required',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+      );
+      setVehicleNo(null);
+      setButtonLoading(false);
+    }
+  }
+
   return (
     <Layout>
       <ScrollView style={{flex: 1}}>
@@ -131,14 +176,24 @@ function TopTabComponent({route}) {
                   required={true}
                   label="Vehicle Number"
                   leftIcon="bus"
+                  onChangeText={text => setVehicleNo(text)}
+                  value={vehicleNumber}
                 />
                 <Button
                   title="Generate"
+                  loading={buttonLoading}
                   buttonStyle={{
                     backgroundColor: COLORS.darkGreen,
                     marginTop: 10,
                     borderRadius: 2,
                     paddingVertical: 10,
+                  }}
+                  titleStyle={{
+                    color: COLORS.white,
+                  }}
+                  onPress={() => {
+                    setButtonLoading(true);
+                    submitTicketForm();
                   }}
                 />
               </View>
@@ -151,6 +206,26 @@ function TopTabComponent({route}) {
 }
 
 const Index = () => {
+  const [vehicles, setVehicles] = React.useState([]);
+  const [loadingFairs, setLoadingFairs] = React.useState(true);
+  //Use Effect Hooks
+  const authContext = useContext(AuthContext);
+  async function getVehicleTypeData() {
+    try {
+      let response = await api.getVehicleType();
+      setVehicles(response?.data?.data);
+      setLoadingFairs(false);
+    } catch (e) {
+      setLoadingFairs(false);
+      console.error(e);
+    }
+  }
+
+  React.useEffect(() => {
+    getVehicleTypeData();
+  }, []);
+
+  console.log(vehicles);
   return (
     <Layout>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -183,42 +258,52 @@ const Index = () => {
               <Text style={FONTS.h4}>Active User</Text>
               <Text
                 style={[FONTS.h4, {fontWeight: 'bold', color: COLORS.primary}]}>
-                Jaskaran
+                {authContext?.user?.name}
               </Text>
             </View>
           </View>
-          <NavigationContainer independent={true}>
-            <Tab.Navigator
-              initialRouteName="Parking"
-              screenOptions={{
-                tabBarStyle: {
-                  backgroundColor: COLORS.white,
-                },
-                tabBarLabelStyle: {fontSize: 13, fontWeight: 'bold'},
-                tabBarActiveTintColor: COLORS.white,
-                tabBarInactiveTintColor: COLORS.darkgray,
-                tabBarAllowFontScaling: false,
-                tabBarIndicatorStyle: {
-                  height: '100%',
-                  backgroundColor: COLORS.primary,
-                },
-                tabBarPressColor: COLORS.primary,
-              }}>
-              {TABS.map(tab => {
-                return (
-                  <Tab.Screen
-                    key={tab.id}
-                    name={tab.name}
-                    component={TopTabComponent}
-                    initialParams={tab.user}
-                    options={{
-                      title: tab.name,
-                    }}
-                  />
-                );
-              })}
-            </Tab.Navigator>
-          </NavigationContainer>
+
+          {loadingFairs ? (
+            <View style={{flex: 1, justifyContent: 'center'}}>
+              <ActivityIndicator size="large" color={COLORS.primary} />
+            </View>
+          ) : (
+            <NavigationContainer independent={true}>
+              <Tab.Navigator
+                initialRouteName="Parking"
+                screenOptions={{
+                  tabBarStyle: {
+                    backgroundColor: COLORS.white,
+                  },
+                  tabBarLabelStyle: {fontSize: 13, fontWeight: 'bold'},
+                  tabBarActiveTintColor: COLORS.white,
+                  tabBarInactiveTintColor: COLORS.darkgray,
+                  tabBarAllowFontScaling: false,
+                  tabBarIndicatorStyle: {
+                    height: '100%',
+                    backgroundColor: COLORS.primary,
+                  },
+                  tabBarPressColor: COLORS.primary,
+                }}>
+                {vehicles?.map(tab => {
+                  return (
+                    <Tab.Screen
+                      key={tab.id}
+                      name={tab.vehicle_type}
+                      component={TopTabComponent}
+                      initialParams={{
+                        id: tab.id,
+                        employeeId: authContext?.user?.id,
+                      }}
+                      options={{
+                        title: tab.vehicle_type,
+                      }}
+                    />
+                  );
+                })}
+              </Tab.Navigator>
+            </NavigationContainer>
+          )}
         </View>
       </ScrollView>
     </Layout>

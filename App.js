@@ -1,15 +1,15 @@
-import { NavigationContainer } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import 'react-native-gesture-handler';
 import SplashScreen from 'react-native-splash-screen';
 import AuthContext from './src/auth/Context';
-import { COLORS } from './src/constants';
+import {COLORS} from './src/constants';
 import {
   AppDrawerNavigator,
   AuthNavigator,
   navigationRef,
-  navigationTheme
+  navigationTheme,
 } from './src/routes';
 
 export default function App() {

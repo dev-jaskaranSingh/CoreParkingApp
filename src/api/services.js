@@ -1,37 +1,55 @@
-import { apiClient, axios } from './client';
+import {apiClient, axios} from './client';
 
 //Api endPoints
 const endPoint = {
-  demo: '/demo',
+  entryVehicle: '/entry/vehicle',
+  getVehicleType: '/get/vehicle/type',
+  searchVehicle: '/search/vehicle',
 };
 
 //Call Api Function
 
 let cancelToken;
-const demoPost = postData => {
-  //Check if there are any previous pending requests
-  if (typeof cancelToken != typeof undefined) {
-    cancelToken.cancel("Operation canceled due to new request.")
-  }
-  //Save the cancel token for the current request
-  cancelToken = axios.CancelToken.source()
-  apiClient.post(endPoint.demo, postData, { cancelToken: cancelToken.token });
-}
 
-const demoGet = async (id) => {
+const entryVehicle = postData => {
   //Check if there are any previous pending requests
-  if (typeof cancelToken != typeof undefined) {
-    cancelToken.cancel("Operation canceled due to new request.")
+  if (typeof cancelToken !== typeof undefined) {
+    cancelToken.cancel('Operation canceled due to new request.');
   }
   //Save the cancel token for the current request
-  cancelToken = axios.CancelToken.source()
-  return apiClient.get(endPoint.demo + '/' + id,
-    { cancelToken: cancelToken.token }
-  );
-}
+  cancelToken = axios.CancelToken.source();
+  return apiClient.post(endPoint.entryVehicle, postData, {
+    cancelToken: cancelToken.token,
+  });
+};
+
+const searchVehicle = postData => {
+  //Check if there are any previous pending requests
+  if (typeof cancelToken !== typeof undefined) {
+    cancelToken.cancel('Operation canceled due to new request.');
+  }
+  //Save the cancel token for the current request
+  cancelToken = axios.CancelToken.source();
+  return apiClient.post(endPoint.searchVehicle, postData, {
+    cancelToken: cancelToken.token,
+  });
+};
+
+const getVehicleType = async () => {
+  //Check if there are any previous pending requests
+  if (typeof cancelToken !== typeof undefined) {
+    cancelToken.cancel('Operation canceled due to new request.');
+  }
+  //Save the cancel token for the current request
+  cancelToken = axios.CancelToken.source();
+  return apiClient.get(endPoint.getVehicleType, {
+    cancelToken: cancelToken.token,
+  });
+};
 
 //Export Functions
 export default {
-  demoGet,
-  demoPost
+  getVehicleType,
+  entryVehicle,
+  searchVehicle,
 };

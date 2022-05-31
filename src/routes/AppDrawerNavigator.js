@@ -1,20 +1,20 @@
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
-  DrawerItemList
+  DrawerItemList,
 } from '@react-navigation/drawer';
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {
   Image,
   Text,
   TouchableOpacity,
   useWindowDimensions,
-  View
+  View,
 } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import {Button, Icon} from 'react-native-elements';
 import AuthContext from '../auth/Context';
-import { COLORS } from '../constants';
-import { AppTabNavigator } from '../routes';
+import {COLORS} from '../constants';
+import {AppTabNavigator} from '../routes';
 function CustomDrawerContent(props) {
   //Deceleration Of Context
   const authContext = useContext(AuthContext);
@@ -53,12 +53,12 @@ function CustomDrawerContent(props) {
               alignItems: 'center',
             }}>
             <View>
-              <Text>Jaskaran Singh</Text>
-              <Text>jaskaran@gmail.com</Text>
+              <Text>{authContext?.user?.name}</Text>
+              <Text>{authContext?.user?.email}</Text>
             </View>
             <Image
               source={{
-                uri: 'https://avatars.githubusercontent.com/u/42887065?v=4',
+                uri: 'https://i.pinimg.com/736x/64/81/22/6481225432795d8cdf48f0f85800cf66.jpg',
               }}
               style={{width: 60, height: 60, borderRadius: 30}}
             />
