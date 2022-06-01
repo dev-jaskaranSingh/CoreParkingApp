@@ -5,21 +5,21 @@ import {Button} from 'react-native-elements/dist/buttons/Button';
 import {COLORS, FONTS} from '../../constants';
 import api from '../../api/services';
 const Index = () => {
-  const [vehicleOrBillNumber, setVehicleOrBillNumber] = React.useState('');
+  const [billOrVehicleNumber, setBillOrVehicleNumber] = React.useState('');
   const [buttonLoading, setButtonLoading] = React.useState(false);
   const [parkingDetails, setParkingDetails] = React.useState(null);
 
   async function handleFormSubmit() {
     setButtonLoading(true);
-    if (vehicleOrBillNumber !== '') {
+    if (billOrVehicleNumber !== '') {
       try {
         let response = await api.searchVehicle({
-          billno: vehicleOrBillNumber,
+          billOrVehicleNumber: billOrVehicleNumber,
         });
         setButtonLoading(false);
         let data = response.data.data;
         setParkingDetails(data.parkingDetails);
-        setVehicleOrBillNumber('');
+        setBillOrVehicleNumber('');
         ToastAndroid.show(
           data.message,
           ToastAndroid.SHORT,
@@ -51,8 +51,8 @@ const Index = () => {
         required={true}
         label="Bill/Vehicle Number"
         leftIcon="bus"
-        value={vehicleOrBillNumber}
-        onChangeText={value => setVehicleOrBillNumber(value)}
+        value={billOrVehicleNumber}
+        onChangeText={value => setBillOrVehicleNumber(value)}
       />
 
       <Button
