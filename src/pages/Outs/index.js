@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
+import {StyleSheet, Text, View, ToastAndroid, ScrollView} from 'react-native';
 import {InputComponent} from '../../components';
 import {Button} from 'react-native-elements/dist/buttons/Button';
 import {COLORS, FONTS} from '../../constants';
@@ -11,29 +11,42 @@ const Index = () => {
 
   async function handleFormSubmit() {
     setButtonLoading(true);
-    console.log('vehicleOrBillNumber', vehicleOrBillNumber);
-    try {
-      let response = await api.searchVehicle({
-        billno: vehicleOrBillNumber,
-      });
-      setButtonLoading(false);
-      let data = response.data.data;
-      setParkingDetails(data.parkingDetails);
-      setVehicleOrBillNumber('');
-      ToastAndroid.show(data.message, ToastAndroid.SHORT, ToastAndroid.BOTTOM);
-    } catch (err) {
+    if (vehicleOrBillNumber !== '') {
+      try {
+        let response = await api.searchVehicle({
+          billno: vehicleOrBillNumber,
+        });
+        setButtonLoading(false);
+        let data = response.data.data;
+        setParkingDetails(data.parkingDetails);
+        setVehicleOrBillNumber('');
+        ToastAndroid.show(
+          data.message,
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+        );
+      } catch (err) {
+        setButtonLoading(false);
+        setParkingDetails(null);
+        ToastAndroid.showWithGravity(
+          err.response.data.error.message,
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+        );
+      }
+    } else {
       setButtonLoading(false);
       setParkingDetails(null);
       ToastAndroid.showWithGravity(
-        err.response.data.error.message,
+        'Please enter vehicle number or bill number!',
         ToastAndroid.SHORT,
-        ToastAndroid.BOTTOM,
+        ToastAndroid.CENTER,
       );
     }
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} keyboardShouldPersistTaps="never">
       <InputComponent
         required={true}
         label="Bill/Vehicle Number"
@@ -99,7 +112,7 @@ const Index = () => {
           <Button title="Print" buttonStyle={styles.printButton} />
         </>
       )}
-    </View>
+    </ScrollView>
   );
 };
 

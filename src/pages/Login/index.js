@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -18,10 +18,10 @@ import api from '../../api/auth';
 
 export default function index({navigation}) {
   //Deceleration Of Context
-  const authContext = useContext(AuthContext);
-  const [email, setEmail] = useState('9876543123');
-  const [password, setPassword] = useState('123456');
-  const [buttonLoading, setButtonLoading] = useState(false);
+  const authContext = React.useContext(AuthContext);
+  const [email, setEmail] = React.useState('9876543123');
+  const [password, setPassword] = React.useState('123456');
+  const [buttonLoading, setButtonLoading] = React.useState(false);
 
   function loginUser() {
     api
@@ -103,14 +103,7 @@ export default function index({navigation}) {
     return (
       <View style={styles.center}>
         {/* Logo */}
-        <Image
-          source={images.logo}
-          resizeMode="contain"
-          style={{
-            height: 250,
-            width: 250,
-          }}
-        />
+        <Image source={images.logo} resizeMode="contain" style={styles.logo} />
       </View>
     );
   }
@@ -191,5 +184,9 @@ const styles = StyleSheet.create({
   center: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  logo: {
+    height: 250,
+    width: 250,
   },
 });
