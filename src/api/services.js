@@ -5,6 +5,7 @@ const endPoint = {
   entryVehicle: '/entry/vehicle',
   getVehicleType: '/get/vehicle/type',
   searchVehicle: '/search/vehicle',
+  exitVehicle: '/exit/vehicle',
 };
 
 //Call Api Function
@@ -19,6 +20,18 @@ const entryVehicle = postData => {
   //Save the cancel token for the current request
   cancelToken = axios.CancelToken.source();
   return apiClient.post(endPoint.entryVehicle, postData, {
+    cancelToken: cancelToken.token,
+  });
+};
+
+const exitVehicle = postData => {
+  //Check if there are any previous pending requests
+  if (typeof cancelToken !== typeof undefined) {
+    cancelToken.cancel('Operation canceled due to new request.');
+  }
+  //Save the cancel token for the current request
+  cancelToken = axios.CancelToken.source();
+  return apiClient.post(endPoint.exitVehicle, postData, {
     cancelToken: cancelToken.token,
   });
 };
@@ -52,4 +65,5 @@ export default {
   getVehicleType,
   entryVehicle,
   searchVehicle,
+  exitVehicle,
 };

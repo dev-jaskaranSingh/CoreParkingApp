@@ -69,7 +69,7 @@ export default function index({navigation}) {
           loading={buttonLoading}
           onPress={() => {
             setButtonLoading(true);
-            if (email === '' || password === '') {
+            if (emailOrMobile === '' || password === '') {
               ToastAndroid.showWithGravity(
                 'Please fill all the fields',
                 ToastAndroid.SHORT,
@@ -111,7 +111,7 @@ export default function index({navigation}) {
   function renderInputFields() {
     return (
       <View behavior="position" style={{paddingBottom: SIZES.padding * 2}}>
-        {/* email */}
+        {/* emailOrMobile */}
         <InputComponent
           placeholder="Mobile/Email"
           label="Mobile/Email"
