@@ -1,143 +1,164 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
 import {InputComponent} from '../../components';
 import {Button} from 'react-native-elements/dist/buttons/Button';
 import {COLORS, FONTS} from '../../constants';
-
+import api from '../../api/services';
 const Index = () => {
+  const [vehicleOrBillNumber, setVehicleOrBillNumber] = React.useState('');
+  const [buttonLoading, setButtonLoading] = React.useState(false);
+  const [parkingDetails, setParkingDetails] = React.useState(null);
+
+  async function handleFormSubmit() {
+    setButtonLoading(true);
+    console.log('vehicleOrBillNumber', vehicleOrBillNumber);
+    try {
+      let response = await api.searchVehicle({
+        billno: vehicleOrBillNumber,
+      });
+      setButtonLoading(false);
+      let data = response.data.data;
+      setParkingDetails(data.parkingDetails);
+      setVehicleOrBillNumber('');
+      ToastAndroid.show(data.message, ToastAndroid.SHORT, ToastAndroid.BOTTOM);
+    } catch (err) {
+      setButtonLoading(false);
+      setParkingDetails(null);
+      ToastAndroid.showWithGravity(
+        err.response.data.error.message,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+      );
+    }
+  }
+
   return (
     <View style={styles.container}>
       <InputComponent
         required={true}
         label="Bill/Vehicle Number"
         leftIcon="bus"
-      />
-      <Button
-        title="Search"
-        buttonStyle={{
-          backgroundColor: COLORS.darkGreen,
-          marginTop: 10,
-          borderRadius: 2,
-          paddingVertical: 8,
-        }}
+        value={vehicleOrBillNumber}
+        onChangeText={value => setVehicleOrBillNumber(value)}
       />
 
-      <View
-        style={{
-          paddingHorizontal: 10,
-          backgroundColor: COLORS.lightGray,
-          marginVertical: 10,
-        }}>
+      <Button
+        title="Search"
+        loading={buttonLoading}
+        buttonStyle={styles.searchButton}
+        onPress={handleFormSubmit}
+      />
+
+      <View style={styles.grayStrip}>
         <View
           style={{
             flexDirection: 'row',
             paddingVertical: 10,
           }}>
-          <Text style={[FONTS.h4, {fontWeight: 'bold', color: COLORS.primary}]}>
+          <Text
+            style={[
+              FONTS.h4,
+              {fontWeight: 'bold', color: COLORS.primary, textAlign: 'center'},
+            ]}>
             Ticker Details
           </Text>
         </View>
       </View>
-
-      <View
-        style={{
-          marginTop: 5,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingVertical: 10
-          }}>
-          <Text style={[FONTS.h4, {color: COLORS.primary}]}>
-            Bill Number
-          </Text>
-          <Text style={[FONTS.h4, {color: COLORS.darkTransparentk}]}>
-            432423
-          </Text>
+      {!(parkingDetails !== null) ? (
+        <View style={styles.tickerContainer}>
+          <Text style={styles.receiptHead}>Record Not Available</Text>
         </View>
+      ) : (
+        <>
+          <View style={styles.tickerContainer}>
+            <Text style={styles.title}>ISBT ASR</Text>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingVertical: 10,
-            marginTop:15
-          }}>
-          <Text style={[FONTS.h4, {color: COLORS.primary}]}>
-            Vehicle Number
-          </Text>
-          <Text style={[FONTS.h4, {color: COLORS.darkTransparentk}]}>
-            PB02-1234
-          </Text>
-        </View>
+            <Text style={styles.receiptHead}>Amritsar Bus Parking Slip</Text>
 
+            <View style={styles.row}>
+              <Text style={styles.cols}>Bill Number</Text>
+              <Text style={styles.cols}>{parkingDetails?.bill_number}</Text>
+            </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingVertical: 10,
-            marginTop:15
-          }}>
-          <Text style={[FONTS.h4, {color: COLORS.primary}]}>
-            Vehicle Type
-          </Text>
-          <Text style={[FONTS.h4, {color: COLORS.darkTransparentk}]}>
-            Mini
-          </Text>
-        </View>
+            <View style={styles.row}>
+              <Text style={styles.cols}>Vehicle Type</Text>
+              <Text style={styles.cols}>
+                {parkingDetails?.get_vehicle_type_and_fare?.vehicle_type}
+              </Text>
+            </View>
 
+            <View style={styles.row}>
+              <Text style={styles.cols}>Vehicle Number</Text>
+              <Text style={styles.cols}>{parkingDetails?.vehicle_number}</Text>
+            </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingVertical: 10,
-            marginTop:15
-          }}>
-          <Text style={[FONTS.h4, {color: COLORS.primary}]}>
-            In date and time
-          </Text>
-          <Text style={[FONTS.h4, {color: COLORS.darkTransparentk}]}>
-            12/12/2020 12:12 PM
-          </Text>
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingVertical: 10,
-            marginTop:15
-          }}>
-          <Text style={[FONTS.h4, {color: COLORS.primary}]}>
-            Amount
-          </Text>
-          <Text style={[FONTS.h4, {color: COLORS.darkTransparentk}]}>
-            12,00 Rs
-          </Text>
-        </View>
-      </View>
-
-      <Button
-        title="Print"
-        buttonStyle={{
-          backgroundColor: COLORS.primary,
-          marginTop: 20,
-          borderRadius: 2,
-          paddingVertical: 8,
-        }}
-      />
+            <Text style={styles.receiptFooter}>
+              *Double Amount, if slip lost*
+            </Text>
+          </View>
+          <Button title="Print" buttonStyle={styles.printButton} />
+        </>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: COLORS.darkTransparent,
+    textAlign: 'center',
+    fontFamily: 'cosmic-bold',
+  },
   container: {
     flex: 1,
     padding: 10,
     backgroundColor: 'white',
+  },
+  row: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 12,
+  },
+  cols: {
+    fontSize: 13,
+    color: COLORS.darkTransparent,
+    textAlign: 'center',
+  },
+  receiptFooter: {
+    fontSize: 14,
+    marginTop: 30,
+    color: COLORS.darkTransparent,
+    textAlign: 'center',
+  },
+  receiptHead: {
+    fontSize: 15,
+    color: COLORS.darkTransparent,
+    textAlign: 'center',
+  },
+  printButton: {
+    backgroundColor: COLORS.primary,
+    marginTop: 20,
+    borderRadius: 2,
+    paddingVertical: 8,
+  },
+  searchButton: {
+    backgroundColor: COLORS.darkGreen,
+    marginTop: 10,
+    borderRadius: 2,
+    paddingVertical: 8,
+  },
+  grayStrip: {
+    paddingHorizontal: 10,
+    backgroundColor: COLORS.lightGray,
+    marginVertical: 10,
+  },
+  tickerContainer: {
+    marginTop: 5,
+    padding: 20,
+    backgroundColor: COLORS.lightGray,
   },
 });
 
