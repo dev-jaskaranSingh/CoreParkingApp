@@ -6,9 +6,9 @@ const endPoint = {
 };
 
 //Call Api Function
-const signIn = async (email, password) => {
+const signIn = async (emailOrMobile, password) => {
   return await apiClient.post(endPoint.login, {
-    email: email,
+    emailOrMobile: emailOrMobile,
     password: password,
   });
 };

@@ -19,13 +19,13 @@ import api from '../../api/auth';
 export default function index({navigation}) {
   //Deceleration Of Context
   const authContext = React.useContext(AuthContext);
-  const [email, setEmail] = React.useState('9876543123');
+  const [emailOrMobile, setEmailOrMobile] = React.useState('9876543123');
   const [password, setPassword] = React.useState('123456');
   const [buttonLoading, setButtonLoading] = React.useState(false);
 
   function loginUser() {
     api
-      .signIn(email, password)
+      .signIn(emailOrMobile, password)
       .then(res => {
         console.log(res.status);
         if (res.status === 200) {
@@ -117,10 +117,10 @@ export default function index({navigation}) {
           label="Mobile/Email"
           required
           leftIcon="phone"
-          value={email}
+          value={emailOrMobile}
           onChangeText={value => {
             console.log(value);
-            setEmail(value);
+            setEmailOrMobile(value);
           }}
         />
 
