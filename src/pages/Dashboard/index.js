@@ -11,6 +11,7 @@ import {
   View,
   ActivityIndicator,
   ToastAndroid,
+  TouchableOpacity,
 } from 'react-native';
 import {Button, Icon} from 'react-native-elements';
 import {Layout} from '..';
@@ -20,31 +21,6 @@ import api from '../../api/services';
 import AuthContext from '../../auth/Context';
 
 const Tab = createMaterialTopTabNavigator();
-
-const TABS = [
-  {
-    id: 1,
-    name: 'Mini',
-    component: TopTabComponent,
-    user: {
-      id: 11,
-      name: 'User 1',
-      collection: '140$',
-      inHouseVehicles: 15,
-    },
-  },
-  {
-    id: 2,
-    name: 'Bus',
-    component: TopTabComponent,
-    user: {
-      id: 12,
-      name: 'User 2',
-      collection: '134$',
-      inHouseVehicles: 25,
-    },
-  },
-];
 
 function Card({title = 'Title', value = 0}) {
   return (
@@ -205,14 +181,49 @@ function TopTabComponent({route}) {
   );
 }
 
+function DateTime() {
+  const [dateTime, setDateTime] = React.useState();
+  setInterval(function () {
+    setDateTime(getDate());
+  }, 10000);
+
+  function getDate() {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+
+    let hours = today.getHours();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    var time = hours + ':' + today.getMinutes();
+
+    return dd + '/' + mm + '/' + yyyy + '  ' + time + ' ' + ampm;
+  }
+
+  return (
+    <Text
+      style={{
+        fontWeight: 'bold',
+        color: COLORS.darkTransparent,
+      }}>
+      {dateTime}
+    </Text>
+  );
+}
+
 const Index = () => {
   const [vehicles, setVehicles] = React.useState([]);
   const [loadingFairs, setLoadingFairs] = React.useState(true);
+
+  console.log(vehicles);
   //Use Effect Hooks
   const authContext = useContext(AuthContext);
   async function getVehicleTypeData() {
     try {
-      let response = await api.getVehicleType();
+      let response = await api.getVehicleType({
+        employeeId: authContext?.user?.id,
+      });
       setVehicles(response?.data?.data);
       setLoadingFairs(false);
     } catch (e) {
@@ -233,6 +244,8 @@ const Index = () => {
           style={{
             paddingHorizontal: 10,
             paddingVertical: 15,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
           }}>
           <Text
             style={[
@@ -241,12 +254,12 @@ const Index = () => {
             ]}>
             Dashboard
           </Text>
+          <DateTime />
         </View>
         <View style={{flex: 1, paddingHorizontal: 10}}>
           <View
             style={{
               paddingHorizontal: 10,
-              backgroundColor: COLORS.lightGray,
               marginVertical: 10,
             }}>
             <View
@@ -255,19 +268,50 @@ const Index = () => {
                 paddingVertical: 10,
                 justifyContent: 'space-between',
               }}>
-              <Text style={FONTS.h4}>Active User</Text>
               <Text
                 style={[FONTS.h4, {fontWeight: 'bold', color: COLORS.primary}]}>
                 {authContext?.user?.name}
               </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  ToastAndroid.showWithGravity(
+                    'Refreshing',
+                    ToastAndroid.SHORT,
+                    ToastAndroid.BOTTOM,
+                  );
+                  getVehicleTypeData();
+                }}>
+                <Icon name="refresh" color={COLORS.primary} size={25} />
+              </TouchableOpacity>
             </View>
+          </View>
+
+          <View
+            style={{
+              paddingVertical: 10,
+            }}>
+            <Text
+              style={[
+                FONTS.h5,
+                {
+                  fontWeight: 'bold',
+                  color: COLORS.white,
+                  backgroundColor: COLORS.green,
+                  paddingVertical: 20,
+                  elevation: 5,
+                  width: '100%',
+                  textAlign: 'center',
+                },
+              ]}>
+              Today Collection : {vehicles.totalAmount} RS
+            </Text>
           </View>
 
           {loadingFairs ? (
             <View style={{flex: 1, justifyContent: 'center'}}>
               <ActivityIndicator size="large" color={COLORS.primary} />
             </View>
-          ) : (
+          ) : vehicles?.fairs.length !== 0 ? (
             <NavigationContainer independent={true}>
               <Tab.Navigator
                 initialRouteName="Parking"
@@ -285,7 +329,7 @@ const Index = () => {
                   },
                   tabBarPressColor: COLORS.primary,
                 }}>
-                {vehicles?.map(tab => {
+                {vehicles?.fairs?.map(tab => {
                   return (
                     <Tab.Screen
                       key={tab.id}
@@ -303,7 +347,7 @@ const Index = () => {
                 })}
               </Tab.Navigator>
             </NavigationContainer>
-          )}
+          ) : null}
         </View>
       </ScrollView>
     </Layout>

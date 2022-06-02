@@ -3,7 +3,7 @@ import {apiClient, axios} from './client';
 //Api endPoints
 const endPoint = {
   entryVehicle: '/entry/vehicle',
-  getVehicleType: '/get/vehicle/type',
+  getVehicleType: '/get/vehicle/types',
   searchVehicle: '/search/vehicle',
   exitVehicle: '/exit/vehicle',
 };
@@ -48,14 +48,14 @@ const searchVehicle = postData => {
   });
 };
 
-const getVehicleType = async () => {
+const getVehicleType = postData => {
   //Check if there are any previous pending requests
   if (typeof cancelToken !== typeof undefined) {
     cancelToken.cancel('Operation canceled due to new request.');
   }
   //Save the cancel token for the current request
   cancelToken = axios.CancelToken.source();
-  return apiClient.get(endPoint.getVehicleType, {
+  return apiClient.post(endPoint.getVehicleType, postData, {
     cancelToken: cancelToken.token,
   });
 };
